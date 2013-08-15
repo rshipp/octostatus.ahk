@@ -1,4 +1,4 @@
-﻿; github-status.ahk
+; github-status.ahk
 ; A simple tray-icon app to check GitHub's status.
 
 #Include <json>
@@ -11,12 +11,11 @@ OnExit, ExitRoutine
 ; How long to wait before each status check, in ms:
 waitTime := 300000  ; 5 minutes
 
-; Main
-
 ; Tray menu
 Menu, Tray, NoStandard
+Menu, Tray, Add, &Show status, ShowStatus
 Menu, Tray, Add, &Exit, ExitRoutine
-Menu, Tray, Default, &Exit
+Menu, Tray, Default, &Show status
 
 ; Image files
 FileCreateDir, %A_Temp%\github_status_img
@@ -31,6 +30,11 @@ Loop
 	updateAll()
 	Sleep, %waitTime%
 }
+Return
+
+; On-demand tray tip
+ShowStatus:
+showTrayTip(getStatus(), getLastMessage())
 Return
 
 ; Clean up on exit
