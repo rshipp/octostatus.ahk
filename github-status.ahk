@@ -14,6 +14,7 @@ waitTime := 300000  ; 5 minutes
 ; Tray menu
 Menu, Tray, NoStandard
 Menu, Tray, Add, &Show status, ShowStatus
+Menu, Tray, Add, https://status.&github.com/, GitHubStatus
 Menu, Tray, Add, &Exit, ExitRoutine
 Menu, Tray, Default, &Show status
 
@@ -35,6 +36,11 @@ Return
 ; On-demand tray tip
 ShowStatus:
 showTrayTip(getStatus(), getLastMessage())
+Return
+
+; Go to status.github.com
+GitHubStatus:
+Run, https://status.github.com/
 Return
 
 ; Clean up on exit
