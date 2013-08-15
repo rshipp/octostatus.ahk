@@ -7,7 +7,9 @@ This software is not endorsed or supported by GitHub in any way.
 
 ## Screenshots
 ![Tool tip, minor status](screenshots/ToolTipMinor.png)
+
 ![Tray tip, minor status](screenshots/TrayTipMinor.png)
+
 ![Tray menu, minor status](screenshots/TrayMenuMinor.png)
 
 ## License
