@@ -6,6 +6,8 @@ Uses the GitHub Status API at https://status.github.com/api
 This software is not endorsed or supported by GitHub in any way.
 
 ## Screenshots
+![Tray tip, good status](screenshots/TrayTipGood.png)
+
 ![Tool tip, minor status](screenshots/ToolTipMinor.png)
 
 ![Tray tip, minor status](screenshots/TrayTipMinor.png)
