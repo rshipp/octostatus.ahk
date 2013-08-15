@@ -5,6 +5,11 @@ Uses the GitHub Status API at https://status.github.com/api
 ## Disclaimer
 This software is not endorsed or supported by GitHub in any way.
 
+## Screenshots
+![Tool tip, minor status](screenshots/ToolTipMinor.png)
+![Tray tip, minor status](screenshots/TrayTipMinor.png)
+![Tray menu, minor status](screenshots/TrayMenuMinor.png)
+
 ## License
 ### ahk-syslog-app.ahk
 Distributed under a BSD-New (BSD 3-clause) license.

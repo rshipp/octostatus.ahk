@@ -131,7 +131,7 @@ showTrayTip(status, message)
 		icon := 1
 	; else use the default (blank)
 
-	TrayTip, GitHub Status: %status%, %message%,, %icon%
+	TrayTip, GitHub Status, %message%,, %icon%
 }
 
 updateAll()
