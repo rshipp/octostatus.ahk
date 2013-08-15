@@ -10,5 +10,5 @@ This software is not endorsed or supported by GitHub in any way.
 Distributed under a BSD-New (BSD 3-clause) license.
 ### lib\json.ahk
 Distributed under a Simplified BSD license, copyright (c) Titan.
-### img\*
+### img\\*
 Copyright (c) GitHub, license unknown.
