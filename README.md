@@ -11,4 +11,4 @@ Distributed under a BSD-New (BSD 3-clause) license.
 ### lib\json.ahk
 Distributed under a Simplified BSD license, copyright (c) Titan.
 ### img\\*
-Copyright (c) GitHub, license unknown.
+Copyright (c) GitHub. See https://github.com/logos for more information.
