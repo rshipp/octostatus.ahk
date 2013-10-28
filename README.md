@@ -2,6 +2,8 @@
 A simple tray-icon app to check GitHub's status.
 Uses the GitHub Status API at https://status.github.com/api
 
+To use, just download and run the executable.
+
 ## Disclaimer
 This software is not endorsed or supported by GitHub in any way.
 
