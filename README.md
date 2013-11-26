@@ -23,3 +23,7 @@ Distributed under a BSD-New (BSD 3-clause) license.
 Distributed under a Simplified BSD license, copyright (c) Titan.
 ### img\\*
 Copyright (c) GitHub. See https://github.com/logos for more information.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/george2/ahk-github-status/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
