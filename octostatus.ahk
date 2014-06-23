@@ -1,4 +1,3 @@
-; github-status.ahk
 ; A simple tray-icon app to check GitHub's status.
 
 #Include <json>
