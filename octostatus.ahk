@@ -2,6 +2,7 @@
 
 #Include <json>
 #NoEnv
+#SingleInstance,Force
 SendMode Input
 SetWorkingDir %A_ScriptDir%
 OnExit, ExitRoutine
@@ -34,7 +35,10 @@ Return
 
 ; On-demand tray tip
 ShowStatus:
-showTrayTip(getStatus(), getLastMessage())
+{
+	jsonResponse := getStatusJson()
+	showTrayTip(getStatus(jsonResponse), getLastMessage(jsonResponse))
+}
 Return
 
 ; Go to status.github.com
@@ -49,65 +53,41 @@ ExitApp
 Return
 
 ; Functions
-getStatusURL()
-{
-	static statusURL
-
-	if (statusURL = "")
-	{
-		UrlDownloadToFile, *0 https://status.github.com/api.json, %A_Temp%\github_api.json
-		FileRead, api, %A_Temp%\github_api.json
-		statusURL := json(api, "status_url")
-	}
-
-	return statusURL	
+URLDownloadToVar(url){
+	hObject:=ComObjCreate("WinHttp.WinHttpRequest.5.1")
+	hObject.Open("GET",url)
+	hObject.Send()
+	return hObject.ResponseText
 }
 
-getLastMessageURL()
-{
-	static messageURL
-
-	if (messageURL = "")
-	{
-		UrlDownloadToFile, *0 https://status.github.com/api.json, %A_Temp%\github_api.json
-		FileRead, api, %A_Temp%\github_api.json
-		messageURL := json(api, "last_message_url")
-	}
-
-	return messageURL
+getStatusJson(){
+	fullJson := URLDownloadToVar("https://kctbh9vrtdwd.statuspage.io/api/v2/status.json")
+	return fullJson
 }
 
-getStatus()
-{
-	statusURL := getStatusURL()
-	UrlDownloadToFile, %statusURL%, %A_Temp%\github_status.json
-	FileRead, status, %A_Temp%\github_status.json
-	return json(status, "status")
+getStatus(jsonResponse){
+  s := json(jsonResponse, "status")
+	return json(s, "indicator")
 }
 
-getLastUpdated()
-{
-	statusURL := getStatusURL()
-	UrlDownloadToFile, *0 %statusURL%, %A_Temp%\github_status.json
-	FileRead, status, %A_Temp%\github_status.json
-	return json(status, "last_updated")
+getLastUpdated(jsonResponse){
+  page := json(jsonResponse, "page")
+	return json(page, "updated_at")
 }
 
-getLastMessage()
-{
-	lastMessageURL := getLastMessageURL()
-	UrlDownloadToFile, %lastMessageURL%, %A_Temp%\github_last_message.json
-	FileRead, lastMessage, %A_Temp%\github_last_message.json
-	return json(lastMessage, "body")
+getLastMessage(jsonResponse){
+  s := json(jsonResponse, "status")
+	return json(s, "description")
 }
 
-setTrayIcon(status)
-{
-	if (status = "major")
+setTrayIcon(status){
+	if (status = "critical")
+		icon := A_Temp . "\github_status_img\critical.ico"
+	else if (status = "major")
 		icon := A_Temp . "\github_status_img\major.ico"
 	else if (status = "minor")
 		icon := A_Temp . "\github_status_img\minor.ico"
-	else if (status = "good")
+	else if (status = "none")
 		icon := A_Temp . "\github_status_img\good.ico"
 	else
 		icon := A_Temp . "\github_status_img\unknown.ico"
@@ -115,13 +95,11 @@ setTrayIcon(status)
 	Menu, Tray, Icon, %icon%
 }
 
-setToolTip(status, lastUpdated)
-{
+setToolTip(status, lastUpdated){
 	Menu, Tray, Tip, Status: %status%`nLast updated %lastUpdated%
 }
 
-showTrayTip(status, message)
-{
+showTrayTip(status, message){
 	if (status = "major")
 		icon := 3
 	else if (status = "minor")
@@ -133,15 +111,17 @@ showTrayTip(status, message)
 	TrayTip, GitHub Status, %message%,, %icon%
 }
 
-updateAll()
-{
-	static lastMessage
+updateAll(){
+  ; do not report All Systems Operational first time after launched
+	static lastMessage = "All Systems Operational"
+	
+	jsonResponse := getStatusJson()
 
-	status := getStatus()
+	status := getStatus(jsonResponse)
 	setTrayIcon(status)
-	setToolTip(status, getLastUpdated())
+	setToolTip(status, getLastUpdated(jsonResponse))
 
-	newMessage := getLastMessage()
+	newMessage := getLastMessage(jsonResponse)
 	if (lastMessage != newMessage)
 	{
 		showTrayTip(status, newMessage)
